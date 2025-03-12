@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>交叉熵 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">评估分类任务的损失函数方案————交叉熵</h1>
+                <div class="article-meta">发布于：2025-03-10</div>
+            </div>
+            <div class="article-content">
+                <h1> 交叉熵损失函数定义</h1>
+                <p>我们一般采用经典交叉熵（cross entropy, CE）损失函数来计算模型预测值与真实标签值的误差。交叉熵是信息论中一个重要概念，其作用主要用于度量两个概率分布间的差异性信息。给定一个样本x，p和q为其两个概率分布，通过q表示p的交叉熵，公式如下：</p>
+                <p><strong>H(p, q) = -p(x) log q(x)</strong></p>
+                <p>其中，x表示样本，p(x)表示真实概率分布，q(x)表示预测概率分布。</p>
+            
+                <p>交叉熵刻画了两个概率分布之间的距离，旨在描述通过概率q来表达概率p的困难程度</p>
+                <p>交叉熵值越小，表明𝑝和𝑞两个概率值越接近。     </p>
+            
+                <h1>交叉熵损失计算示例</h1>
+                <img src="..\machine-learning\photo\qinggy.png" alt="example" width="700" height="350">
+                <p><strong>L = -<sup>1</sup>/<sub>4</sub>[(1×log0.6 + 0×log(1 - 0.6)) + (0×log0.6 + 1×log(1 - 0.6)) + (1×log0.3 + 0×log(1 - 0.3)) + (0×log0.4 + 1×log(1 - 0.4))]</strong></p>
+                <p>= -<sup>1</sup>/<sub>4</sub>(log0.6 + log0.4 + log0.3 + log0.6) ≈ 0.6841</p>
+
+                <h1> 让我们拓展到多分类问题</h1>
+                <p>对于多分类问题，假设训练集中有n个样本，样本的真实标签y和预测概率分布p的交叉熵损失如下：</p>
+                <p><strong>L = <sup>1</sup>/<sub>n</sub> Σ<sup>n</sup><sub>i=1</sub> CrossEntropy(y<sup>(i)</sup>, ŷ<sup>(i)</sup>)</strong></p>
+                <p>其中，CrossEntropy(y<sup>(i)</sup>, ŷ<sup>(i)</sup>) = -Σ<sup>C</sup><sub>j=1</sub> y<sub>j</sub><sup>(i)</sup> log ŷ<sub>j</sub><sup>(i)</sup></p>
+                <p>由于元素y的取值只有0或1，从交叉熵的表示形式可以看出，交叉熵只关注样本真实类别的新概率。
+                    而对于二分类问题，L = -<sup>1</sup>/<sub>n</sub> Σ<sup>n</sup><sub>i=1</sub> [-y<sub>i</sub> log p<sub>i</sub> + (1 - y<sub>i</sub>) log (1 - p<sub>i</sub>)]</p>
+                <p>其中，n表示样本大小，y<sub>i</sub>表示第i个样本的标签，p<sub>i</sub>表示第i个样本预测结果。</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

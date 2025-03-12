@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Loss - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">无监督学习里的聚类分析————K均值算法</h1>
+                <div class="article-meta">发布于：2025-03-03</div>
+            </div>
+            <div class="article-content">
+                <h1>K- 均值算法，又称 K-means ，是一种迭代求解的聚类分析算法。</h1>
+                <h3>• 算法目标：将训练样本划分成 k 个不同的簇（每个簇的中心采用
+                簇中所含值的均值𝜇），使得簇内样本尽可能相似。</h3>
+                <pre><h4>
+        算法流程：
+        ① 确定簇个数 k （计划将数据划分为 k 个类）；
+        ② 随机确定 k 个初始点作为质心（在数据边界范围之内随机选取）；
+        ③ 对每个数据实例依次计算到 k 个质心的距离，选择最小距离的质心，并将其分配给该质心所对应的簇，
+        直到数据集中的所有数据全都分配给 k 个簇，更新 k 个簇的质心为该簇所有点的平均值；
+        ④ 循环上述步骤③，重新分配每个数据实例到新的质心，直到达到终止条件，如所有数据的分配结果不再发生改变为止</h4><pre>
+            <h3>以下是K均值算法的使用示例：</h3>
+            <img src="..\machine-learning\photo\k1.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k2.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k3.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k4.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k5.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k6.png" alt="example" width="700" height="300">
+            <img src="..\machine-learning\photo\k7.png" alt="example" width="700" height="300">
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

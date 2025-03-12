@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>弱监督学习 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">弱监督学习的基本概述</h1>
+                <div class="article-meta">发布于：2025-03-10</div>
+            </div>
+            <div class="article-content">
+                <p>• 弱监督学习是机器学习领域中的一个分支，与传统监督学习相比，其用于训练模型的<br>数据是有限的、含有噪声的或者标注是不准确的。由于缺少有效的监督信息，因此期<br>望机器学习技术能够在弱的监督情况下能主动学习有效的数据特征表示。<br></p>
+                <h2>按照数据的标注程度分类：</h2>
+                <p>•不完全监督：全部训练数据中只有一个子集带有监督标签。比如，基于医学图像的疾病识别与筛查任务中，<br>具有精确标注的医学图像数量很少，大部分医学影像数据是没有被标注的。<br>•不确切监督：只给出数据的粗粒度标签。以基于医学影像的疾病识别与筛查任务为例，研究人员基于医学影<br>像开发计算机辅助诊断算法，需要大量都有精准标注的医学图像，特别是病灶区域标注。然而，由于医生的<br>精力有限和数据标注难度大，医生通常只给出单张医学图像是否存在异常区域，即图像级标注，而不是对医<br>学影像中病理区域进行标注，即像素级标注或对象级标注。<br>•不准确监督：针对的问题是给定的标签并不总是真实的情况。以基于医学图像的疾病识别与筛查任务为例，<br>其中医学影像人工标注质量很大程度依赖于阅片医生的知识、工作强度、经验以及接受的临床训练，这些都<br>可能会使得给定的标签并不总是真实的，特别是针对一些难以被准确分类的医学影像。</p>
+                <h2>按照数据的学习方法分类：</h2>
+                <h3>一、主动学习</h3>
+                <p>通过机器学习的方法获取到那些比较“难”分类的样本数据，用人工的方式进行标注，然后将人工标注得到的数据再次进行训练，提高模型性能</p>
+                <img src="..\machine-learning\photo\zhudong.png" alt="example" width="700" height="200">
+                <h3>二、半监督学习</h3>
+                <p>先用少量的标注数据训练模型；再用初始化的模型对无标签的数据进行标注，得到伪标签；最后用所有数据，包括有标签的数据和得到伪标签的数据，一起对模型进行训练。</p>
+                <img src="..\machine-learning\photo\banjiandu.png" alt="example" width="700" height="300">
+                <h3>三、迁移学习</h3>
+                <p>目标任务的训练数据较少，而有一个相关任务有大量的训练数据, 可以学习某些可以泛化的知识, 这些知识对目标任务会有一定的帮助。</p>
+                <img src="..\machine-learning\photo\qianyi.png" alt="example" width="700" height="400">
+                <h3>四、多示例学习</h3>
+                <p>定义“包”为多个示例的集合，学习者不是接收一组单独标记的实例，而是接收一组带标签的包，每个包拥有多个实例。</p>
+                <p>在多实例二进制分类的简单情况下，如果包中的所有实例都是否定的，则可以将包标记为否定。另一方面，如果包中只要至少有一个是正面的，则包被标记为阳性</p>
+                <img src="..\machine-learning\photo\duoshili.png" alt="example" width="700" height="300">
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

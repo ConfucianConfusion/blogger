@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MP人工神经元模型 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">梦开始的地方————MP人工神经元模型</h1>
+                <div class="article-meta">发布于：2025-02-17</div>
+            </div>
+            <div class="article-content">
+                <p>美国心理学家 W. McCulloch 和数学家 W. Pitts 基
+                    于生物神经元的特点，在 1943 年在论文 《神经活
+                    动中所蕴含思想的逻辑活动》 首次提出了 
+                    <b>McCulloch-Pitts（M-P）人工神经元模型</b></p>
+                    <p>• M-P 人工神经元模型是一个多输入单输出的信息处理单元； <br>• 人工神经元的输入可分为兴奋性输入和抑制性输入这两种类型； <br>• 人工神经元具有空间整合特性和阈值特性； <br>• 人工神经元输入与输出间有固定的时间延迟； <br>• 在人工神经元模型设计中通常忽略时间整合作用以及兴奋期后的不应期； <br>• 人工神经元本身是非时变的，即其突触时延和突触强度均为常数。</p>
+                    <h3>以下呈现生物神经元与人工神经元的类比：</h3>    
+                <img src="..\machine-learning\photo\mp1.png" alt="example" width="700" height="400">
+                <h3>为了方便，接下来涉及如何用MP模型去实现逻辑门的内容将由我的手写笔记组成：</h3>
+                <img src="..\machine-learning\photo\mp2.jpg" alt="example" width="700" height="1000">
+                <p>需要指出的是，以上的过程缺乏学习，仅仅是提出这样的一个模型，为了让人工神经元具备学习能力，科学家摸索出了两套方案</p>
+                <h3>无监督学习————Hebb学习规则</h3>
+                <h3>w<sub>𝑖𝑗</sub>(t + 1) = w<sub>𝑖𝑗</sub>(t) + αy<sub>𝑗</sub>(t)y<sub>𝑖</sub>(t)</h3>
+                <p>其中𝛼表示学习率， 𝑤<sub>ij</sub>(𝑡+1)和𝑤<sub>ij</sub>(𝑡)分别表示在𝑡+1时刻和𝑡时刻，人工神经元𝑗到人工神经元𝑖的连接强度，而𝑦<sub>𝑖</sub>和𝑦<sub>𝑗</sub>为人工神经元𝑖和𝑗的输出。Hebb 学习规则隶属于无监督学习算法的范畴，其主要思想是根据两个人工神经元的激发状态来调整其连接关系，以此实现对简单生物神经活动的模拟</p>
+                <h3>监督学习————Delta学习规则</h3>
+                <h3>w<sub>𝑖𝑗</sub>(t + 1) = w<sub>𝑖𝑗</sub>(t) + α(d<sub>𝑖</sub> - y<sub>𝑖</sub>)y<sub>𝑗</sub>(t)</h3>
+                <p>继Ｈebb 学习规则之后，人工神经元的有监督 Delta 学习规则被提出，用以解决在输入输出已知的情况下神经元权值的学习问题。</p>
+                <p>其中，𝛼 表示学习率，𝑑<sub>𝑖</sub>和 𝑦<sub>𝑖</sub> 为人工神经元 𝑖的期望输出和实际输出， 𝑦<sub>𝑗</sub>(𝑡)表示人工神经元 𝑗在 𝑡时刻的状态（激活或抑制）。从直观上来说，当人工神经元 𝑖的实际输出比期望输出大，则减小与已激活神经元的连接权重，同时增加与已抑制神经元的连接权重；当人工神经元 𝑖的实际输出比期望输出小，则增加与已激活神经元的连接权重，同时减小与已抑制神经元的连接权重。</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

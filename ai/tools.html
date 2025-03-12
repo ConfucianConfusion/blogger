@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>工具推荐 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="../pri-novel/article-list.css">
+    <style>
+        /* 滚动标签条样式 */
+        .tag-section {
+            background-color: var(--background-color);
+            padding: 10px 0;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .tag-container {
+            display: flex;
+            justify-content: flex-start;
+            overflow: hidden;
+            padding: 10px 20px;
+            white-space: nowrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: var(--tag-background);
+            border-radius: 20px;
+            color: var(--tag-color);
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .tag.active {
+            background-color: var(--tag-active-background);
+            color: var(--tag-active-color);
+        }
+
+        .tag:hover {
+            background-color: var(--tag-hover-background);
+            color: var(--tag-hover-color);
+        }
+
+        .tag-tooltip {
+            display: none;
+            position: absolute;
+            background-color: var(--tooltip-background);
+            color: var(--tooltip-color);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 1;
+        }
+
+        .tag-wrapper {
+            display: flex;
+            animation: scroll 30s linear infinite;
+            width: max-content;
+        }
+
+        .tag-wrapper:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 5px 10px;
+            background-color: #e6f0fa;
+            border-radius: 20px;
+            color: #4682B4;
+            font-size: 14px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            flex-shrink: 0;
+            margin-right: 10px;
+            position: relative;
+        }
+
+        .tag.active {
+            background-color: #4682B4;
+            color: white;
+        }
+
+        .tag:hover {
+            background-color: #356b97;
+            color: white;
+        }
+
+        .tag .check {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .tag-tooltip {
+            display: none;
+            position: absolute;
+            background-color: #333;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 1;
+        }
+
+        .tag:hover .tag-tooltip {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="tools.html">工具推荐</a></li>
+                        <li><a href="development.html">发展应用</a></li>
+                        <li><a href="social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="back-to-home">
+            <a href="../index.html" class="home-button">返回主页</a>
+        </div>
+        <h1 class="page-title">工具推荐</h1>
+        
+        <!-- 滚动标签条 -->
+        <section class="tag-section">
+            <div class="tag-container">
+                <div class="tag-wrapper" id="tagWrapper">
+                    <div class="tag active" title="AGI 是人工智能的终极目标，旨在创造能够像人类一样理解、学习、推理、决策并适应各种任务的智能系统。与以往的弱人工智能（专注于特定任务）不同，AGI 具备广泛的认知和适应能力，有望在多个领域实现突破性创新。例如，AGI 可以在医疗、教育、交通等领域提供更高效、更精准的解决方案，推动社会生产力的大幅提升"><span class="check">✔</span> AGI</div>
+                    <div class="tag" title="AI加密货币是人工智能与区块链技术的融合产物，代表了数字资产的新方向。它利用人工智能算法优化区块链操作，如智能合约的自动化、交易速度的提升和安全性的增强。此外，AI加密货币还可以通过机器学习模型分析市场趋势，为投资者提供更精准的决策支持。例如，SingularityNET 的 AGIX 代币允许用户访问各种 AI 服务，并激励开发者为平台贡献。这种融合不仅推动了加密货币的创新，还为去中心化金融和数据共享提供了新的可能性"><span class="check">✔</span> AI+区块链</div>
+                    <div class="tag" title="AlphaFold是由DeepMind开发的一系列人工智能程序，主要用于蛋白质空间结构的预测。它通过深度学习技术，能够以前所未有的精确度预测蛋白质、DNA、RNA等生物分子的结构和相互作用。这一技术为药物研发、疾病机理研究等领域带来了革命性的突破，甚至助力相关研究获得了诺贝尔化学奖"><span class="check">✔</span> Al+生物医学</div>
+                    <div class="tag" title="结合AI技术，如Synthesia等文本转视频工具，能在短时间内将书面内容转化为引人入胜的视频课程。这些课程由虚拟的AI角色讲解，支持多种语言，并且便于快速编辑以调整内容。将这些AI视频整合到Easygenerator或Articulate 360等简易课程制作工具中，能添加互动元素，创造出让学生全情投入的课程。这样，一个由AI驱动的虚拟导师就能提供极具吸引力的教学体验。"><span class="check">✔</span> AI+个性化教育</div>
+                    <div class="tag" title="Manus是由Monica团队开发的全球首款通用AI Agent，能够将用户的想法转化为具体成果。它通过规划代理、执行代理和验证代理的分工机制，模拟人类工作流程，完成从任务规划到执行的全流程。Manus在GAIA基准测试中取得了最先进的成绩，展现了强大的真实世界问题解决能力。"><span class="check">✔</span> AI+工作流</div>
+                    <div class="tag" title="AI心理治疗工具近年来发展迅速，为心理健康支持提供了新的途径。例如，FriendnPal、Woebot Health等AI工具通过认知行为疗法（CBT）等科学方法，为用户提供24/7的情感支持和心理健康建议。这些工具在某些情况下可以作为传统心理治疗的补充，尤其是在资源有限或危机情境下。"><span class="check">✔</span> AI+心理治疗</div>
+                    <div class="tag" title="斯坦福大学与谷歌合作开展了一项名为斯坦福AI小镇的社会学实验，研究论文于2023年4月发表，在一个虚拟小镇中安置了25个由大型语言模型驱动的AI智能体，这些智能体拥有独特个性与背景，能自主生活、互动并组织活动，旨在通过模拟人类社交行为，探索AI在观察、记忆、规划与反思方面的能力，展现了其生成类似人类行为的潜力。"><span class="check">✔</span> AI+社区治理</div>
+                    <div class="tag" title="AI智驾汽车具备三个核心特征，分别是主动学习、快速成长、千人千面。其核心在于通过数据投喂和训练无限度规则的AI大模型，来提高对复杂场景的理解、感知和数据决策能力。如果拥有感知、定位、规划、决策的核心算法研发能力，同时具备车端、云端的数据处理分析能力，就可以实现基于实际数据的算法快速迭代，并通过OTA不断给用户提供更高级别的自动驾驶能力。"><span class="check">✔</span> AI+智慧出行</div>
+                    <div class="tag" title="具身智能正在发展更高级的跨模态交互能力，整合视觉、听觉、触觉等多种感官信息。例如，PaLM-E等多模态语言模型通过将真实世界的连续传感器模态融入语言模型，实现了单词与感知之间的联系。"><span class="check">✔</span> 具身智能</div>
+                    <div class="tag" title="利用人工智能技术创建、管理和优化多个社交账号协同运作的生态系统，广泛应用于品牌营销、内容传播、舆论引导等领域。2023年来，随着ChatGPT、Claude等模型普及，营销公司和个人创作者开始大规模采用AI工具（如Jasper、Canva AI）构建矩阵，特别是在X、TikTok等平台。  "><span class="check">✔</span> AI+自媒体</div>
+                    <div class="tag" title="AIGC实现了高分辨率、高质量的图像输出，并通过扩散模型等技术增强了可控性，支持文本、草图等多种条件驱动的生成，同时推动了多模态融合和小样本学习的发展。在视频生成领域，AIGC突破了长视频生成的难题，能够生成连贯的多分钟视频，并实现了视频编辑、补全以及基于动作驱动的角色生成等功能。"><span class="check">✔</span> AIGC</div>
+                    <div class="tag" title="英伟达RTX 50系显卡在全新的Blackwell架构引入了第五代Tensor Core和第四代RT Core，支持DLSS 4多帧生成技术，能够通过AI算法在渲染过程中生成额外帧，大幅提升游戏帧率，最高可达8倍提升。此外，RTX 50系显卡采用神经网络渲染技术，通过AI优化纹理压缩和材质处理，减少显存占用，同时提升图像质量和渲染效率"><span class="check">✔</span> AI+硬件</div>
+                    <div class="tag" title="SJTU AI4MATH Lab - Lean4 Research Group 的开源项目由上海交通大学罗涛教授 的 AI4MATH 实验室与受奇绩创坛投资的企业交影科技共同贡献，聚焦于 Lean4 形式化方向的研究工作。实验室主要探究如何将自然语言的数学表达自动转化为 Lean4 形式化证明的过程，以进一步推动人工智能在数学定理形式化证明领域的发展。"><span class="check">✔</span> AI+数学研究</div>
+                    <div class="tag" title="IA，即Intelligence Augmented增强智能，与人工智能(AI)以机器替代人类的终极目标不同，增强智能专注于人工智能的辅助作用，强调认知技术的目的是提高人的智力与及能力，增强智能工具的创建是为了帮助而不是替代人类。这种相互影响的情况重新定义为人工智能增强技术(AIA，AI Augmentation)，是一种以人为中心的伙伴关系模型，人与人工智能共同工作以提高认知能力。"><span class="check">✔</span> AIA</div>
+                    <div class="tag" title="AI工具（如GitHub Copilot、CodeLlama等）能够根据开发者输入的自然语言描述或代码片段，自动生成高质量的代码片段，显著提升编程效率。这些工具支持多种编程语言，帮助开发者快速实现功能模块，减少重复性工作。"><span class="check">✔</span> AI+编程开发</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="article-list">
+            <article class="article-card">
+                <h2><a href="tools/coding.html" class="article-title">Github Copilot之外辅助编程的工具，让你事半功倍</a></h2>
+                <div class="article-meta">发布于：2025-03-09</div>
+                <p class="article-excerpt">实际一点，先拿下github学生认证（bushi）</p>
+                <a href="tools/coding.html" class="read-more">阅读全文</a>
+            </article>
+        </div>
+    </div>
+
+    <script src="../script.js"></script>
+    <script src="../pri-novel/article-list.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const tagWrapper = document.getElementById('tagWrapper');
+            const tags = tagWrapper.innerHTML;
+            tagWrapper.innerHTML += tags; // 克隆标签内容以实现无缝滚动
+        });
+    </script>
+</body>
+</html>

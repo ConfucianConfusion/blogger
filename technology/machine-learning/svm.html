@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>支持向量机 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">线性不可分问题的解决方案————支持向量机SVM</h1>
+                <div class="article-meta">发布于：2025-03-03</div>
+            </div>
+            <div class="article-content">
+                <h2>引入：感知机面对线性不可分问题的无能</h2>
+                <img src="..\machine-learning\photo\svm1.png" alt="example" width="700" height="300">
+                <img src="..\machine-learning\photo\svm2.png" alt="example" width="700" height="300">
+                <h2>探究：什么是线性不可分问题</h2>
+                <img src="..\machine-learning\photo\svm3.png" alt="example" width="700" height="300">
+                <p>在二维坐标空间中，线性可分问题是指可以用一条直线将两个类别完全分开，如下图所示，其中白色点代表某一种类别的样本，而黑色点代表另一种类别的样本，这两个类别的样本可以由直线完全区分开，即这两个类别是线性可分的。<br>数学定义： <br>假设𝐷0和𝐷1是欧氏空间中两个点集，如果存在n 维向量w 和实数b，使得所有属于𝐷0的点𝑥𝑖都有𝜔𝑥𝑖+b &gt; 0，而对于所有属于 𝐷1的点𝑥𝑗则有𝜔𝑥𝑗+b &lt; 0，则称𝐷0和𝐷1线性可分。</p>
+                <h3>以下给出一些关键概念</h3>
+                <img src="..\machine-learning\photo\svm4.png" alt="example" width="700" height="300">
+                <h2>从硬间隔支持向量机入手看线性可分</h2>
+                <p>Firstly,硬间隔支持向量机(Hard Margin Support Vector Machine)是一种严格分离不同类别的数据点而不产生重叠和误分类的支持向量机。</p>
+                <p>Secondly,硬间隔支持向量机确保了完美的分类分离，但对异常值很敏感，只适用于线性可分的数据。<br>硬间隔支持向量机的目标是在保证正确分类的同时最大化边际。</p>
+                <img src="..\machine-learning\photo\svm5.png" alt="example" width="700" height="300">
+                <p>有关求最大化边际的方法，相当于把二维空间点到直线距离的思想迁移到到n维空间上，这里给出我手写的笔记：</p>
+                <img src="..\machine-learning\photo\svm6.png" alt="example" width="600" height="300">
+                <h2>从软间隔支持向量机入手看线性不可分</h2>
+                <p>Firstly,软间隔支持向量机(Soft Margin Support Vector Machine)是支持向量机的一种变体，它允许一定程度的误分类。</p>
+                <p>Secondly,该方法对异常值具有较强的鲁棒性，适用于非线性可分数据或有噪声数据。</p>
+                <p>Thirdly,为了避免误分类，相较于硬间隔SVM引入了松弛变量，即：</p>
+                <img src="..\machine-learning\photo\svm7.png" alt="example" width="500" height="140">
+                <p>*左图为软间隔SVM，右图为核函数维度升高的模拟</p>
+                <img src="..\machine-learning\photo\svm8.png" alt="example" width="340" height="300">
+                <img src="..\machine-learning\photo\svm9.png" alt="example" width="340" height="300">
+                <h2>展望：核支持向量机的解决方案</h2>
+                <p>（由于楼主水平有限，本章节仅作初步介绍）</p>
+                <p>•支持向量机使用核函数将输入数据转换到高维空间。这使得更容易找到分离数
+                    据的超平面。常见类型包括线性、多项式和高斯核函数(径向基核函数)核</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

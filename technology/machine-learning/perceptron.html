@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>感知机 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">人工神经元作为线性分类器的构建————感知机Perceptron</h1>
+                <div class="article-meta">发布于：2025-02-24</div>
+            </div>
+            <div class="article-content">
+               <h2>为了让人工神经元模型去实现一些具体的功能，我们在后续设计了一个激活函数，使得人工神经元具备二元线性分类的能力，这套新的模型被称为<i>“感知机(perceptron)“</i></h2>
+               <img src="..\machine-learning\photo\per1.png" alt="example" width="700" height="300">
+               <img src="..\machine-learning\photo\per2.png" alt="example" width="700" height="300">
+               <p>下面给出感知机的训练算法：</p>
+               <h2>输入：数据集 D {(x<sub>1</sub>, y<sub>1</sub>),(x<sub>2</sub>, y<sub>2</sub>),...,(x<sub>n</sub>, y<sub>n</sub>)}，最大训练次数 E</h2>
+    <ol>
+        <li>初始化：w ← 0 , e ← 0, k ← 0</li>
+        <li>For e to E do</li>
+        <li>感知机计算数据集 D</li>
+        <li>i ← 0</li>
+        <li>while i &lt; n do</li>
+        <li>ŷ<sub>i</sub> ← -w<sup>T</sup><sub>k</sub> x<sub>i</sub></li>
+        <li>if ŷ<sub>i</sub> y<sub>i</sub> &lt;= 0 then</li>
+        <li>w<sub>k+1</sub> ← w<sub>k</sub> + y<sub>i</sub>x<sub>i</sub></li>
+    </ol>
+    <h3>输出：w<sub>k</sub></h3>
+    <p>下面给出案例，以及可供参考的使用Java语言完成训练的有关代码：</p>
+    <img src="..\machine-learning\photo\per3.png" alt="example" width="700" height="300">
+    <img src="..\machine-learning\photo\per4.png" alt="example" width="700" height="300">
+    <pre><code>import java.util.Arrays;
+
+        // 数据点类，包含特征向量 x 和标签 y
+        class DataPoint {
+            public double[] x; // 特征向量（3维）
+            public int y;      // 标签（+1 或 -1）
+        
+            public DataPoint(double[] x, int y) {
+                this.x = x;
+                this.y = y;
+            }
+        }
+        
+        // 感知机类，涵盖初始化、预测、训练、获取四个方法
+        class Perceptron {
+            public double[] weights; // 权重向量（3维）
+            public int iterations;   // 迭代次数
+            // 初始化函数：初始权重（0，0，0）
+            public Perceptron(int dimension) {
+                this.weights = new double[dimension]; // 初始化权重为0
+                Arrays.fill(this.weights, 0); // 初始权重为 (0, 0, 0)
+                this.iterations = 0;
+            }
+            // 预测函数：使用 sign(w^T x) 预测标签
+            public int predict(double[] x) {
+                double dotProduct = 0;
+                //用for循环计算向量点乘
+                for (int i = 0; i < x.length; i++) {
+                    dotProduct += weights[i] * x[i];
+                }
+                return (dotProduct > 0) ? 1 : -1;
+            }
+            // 训练函数：更新权重
+            public void train(DataPoint point) {
+                int prediction = predict(point.x);
+                // 如果预测错误（y * (w^T x) <= 0），更新权重
+                if (point.y * prediction <= 0) {
+                    for (int i = 0; i < weights.length; i++) {
+                        weights[i] += point.y * point.x[i]; // w = w + y * x
+                    }
+                    iterations++;
+                    System.out.println("更新权重（迭代 " + iterations + "）：
+                    w = " + Arrays.toString(weights));
+                } else {
+                    System.out.println("正确分类，无需更新：w = " + 
+                    Arrays.toString(weights));
+                }
+            }
+            // 获取当前权重,保留两位小数
+            public double[] getWeights() {
+                double[] formattedWeights = new double[weights.length];
+                for (int i = 0; i < weights.length; i++) {
+                    formattedWeights[i] = Double.parseDouble
+                    (String.format("%.2f", weights[i]));
+                }
+                return formattedWeights;
+            }
+        }
+        
+        public class PerceptronExample {
+            public static void main(String[] args) {
+                // 定义数据集（根据表格数据）
+                DataPoint[] data = new DataPoint[12];
+                data[0] = new DataPoint(new double[]{3.7, -10.5, 27.49}, 1);
+                data[1] = new DataPoint(new double[]{4.8, 0.13, 21.75}, -1);
+                data[2] = new DataPoint(new double[]{4.9, 1.25, 22.31}, -1);
+                data[3] = new DataPoint(new double[]{4.8, 0.13, 21.75}, -1);
+                data[4] = new DataPoint(new double[]{3.7, -10.5, 27.49}, 1);
+                data[5] = new DataPoint(new double[]{4.9, 1.25, 22.31}, -1);
+                data[6] = new DataPoint(new double[]{3.7, -10.5, 27.49}, 1);
+                data[7] = new DataPoint(new double[]{4.9, 1.25, 22.31}, -1);
+                data[8] = new DataPoint(new double[]{4.8, 0.13, 21.75}, -1);
+                data[9] = new DataPoint(new double[]{3.7, -10.5, 27.49}, 1);
+                data[10] = new DataPoint(new double[]{4.9, 1.25, 22.31}, -1);
+                data[11] = new DataPoint(new double[]{4.8, 0.13, 21.75}, -1);
+        
+                // 创建感知机实例（3维特征）
+                Perceptron perceptron = new Perceptron(3);
+                // 训练模型：遍历数据集
+                System.out.println("开始训练，初始权重：w = " + 
+                Arrays.toString(perceptron.getWeights()));
+                for (int i = 0; i < data.length; i++) {
+                    System.out.println("\n处理数据点 " + (i + 1) + ": x = 
+                    " + Arrays.toString(data[i].x) + ", y = " + data[i].y);
+                    perceptron.train(data[i]);
+                    // 预测当前点，验证结果
+                    int prediction = perceptron.predict(data[i].x);
+                    System.out.println("预测结果：y = " + prediction);
+                
+                // 输出最终权重
+                System.out.println("\n训练完成，最终权重：w = " + 
+                Arrays.toString(perceptron.getWeights()));
+            }
+        }
+    }</code></pre> 
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dice Loss - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">评估分割任务的损失函数方案————Dice Loss</h1>
+                <div class="article-meta">发布于：2025-03-10</div>
+            </div>
+            <div class="article-content">
+                <h3>Dice损失函数是图像分割任务中常用的损失函数，适用于样本极度不均的情况，因而常用于医学图像的分割。其是在集合相似度度量函数Dice系数上设计的：</h3>
+                <h4>Dice系数公式：</h4>
+                <p>
+                    Dice Coefficient = <strong>2|X∩Y| / (|X| + |Y|)</strong>,
+                </p>
+                <p>
+                    其中|X∩Y|是X和Y的交集，|X|和|Y|分别表示X和Y中元素的个数。由于分母|X| + |Y|存在重复计算X和Y的共同元素，因此分子|X∩Y|的系数为2。
+                </p>
+                <h2>下面第一张图是视网膜浅层血管复合体的图像，中间是该图像的分割标签，右边是神经网络生成的分割预测结果。</h2>
+                <p>我们可以将公式中的|X|理解为图像分割的真实标签。</p>
+                <p>|Y|可以理解为通过网络产生的预测结果。</p>
+                <p>分母|X| + |Y|为真实标签和预测结果的交集。</p>
+                <p>|X∩Y|为真值和预测正确的部分。</p>
+                <p>因此，Dice系数可以理解为：</p>
+                <p>
+        <strong><big>2 * 预测正确的结果 / 真实标签 + 预测结果</big></strong>
+    </p>
+                <img src="..\machine-learning\photo\pixelcut.png" alt="example" width="700" height="350">
+                <h1>以分割眼底OCTA图像二分类任务为例，图像中每个像素的真实标签只有0、1两个值，0表示背景，1表示OCTA图像中的血管。</h1>
+                <p>在实际计算时，|X∩Y|可以近似为预测分割图与真实标签之间的点乘，并将点乘的元素结果相加。</p>
+                <p>由于真实的元素结果相加，预测分割图中未在标签中激活的所有像素将被忽略。</p>
+                <p>对于激活的像素，低真值的预测将被惩罚。惩罚系数以较高的Dice系数。</p>
+                <p>假设图像的分割标签|X|和经过模型得到的预测结果|Y|分别如下所示（这里的矩阵仅用于形象说明，不是线性代数里的矩阵）：</p>
+                <p>
+                    <strong><big>|X| = 
+                    <pre>
+                    [[0  1  0  1]
+                     [0  0  0  0]
+                     [1  0  1  0]
+                     [1  1  0  1]]
+                    </pre></big></strong>
+                    <strong><big>|Y| = 
+                    <pre>
+                    [[0.02  0.73  0.13  0.85]
+                     [0.11  0.03  0.05  0.09]
+                     [0.98  0.15  0.89  0.10]
+                     [0.93  0.82  0.07  0.97]]
+                    </pre></big></strong>
+                </p>
+                <p>则真实标签与预测结果的点乘可以计算如下：</p>
+                <p>
+                    <strong><big>|X∩Y| = 
+                    <pre>
+                    [[0  1  0  1]   [[0.02  0.73  0.13  0.85]      [[0    0.73  0     0.85]
+                     [0  0  0  0]    [0.11  0.03  0.05  0.09]  -    [0     0    0     0   ]
+                     [1  0  1  0]    [0.98  0.15  0.89  0.10]  -    [0.98  0    0.89  0   ]
+                     [1  1  0  1]]   [0.93  0.82  0.07  0.97]]      [0.93  0.82  0    0.97]]
+                    </pre></big></strong>
+                </p>
+                <h3>逐元素相乘的结果中所有元素相加的和为：</h3>
+                <p>
+                    <strong><big>|X ∩ Y| = 
+                    <pre>
+                    [[0    0.73  0    0.85]
+                     [0    0    0     0   ]
+                     [0.98  0    0.89  0  ]
+                     [0.93  0.82  0   0.97]]= 6.17
+                    </pre></big></strong>
+                </p>
+                <p>而分母|X| + |Y|的计算，也一般采用元素直接相加或元素平均求和的方法。这里，我们采用元素直接相加的做法。则|X| + |Y|为：</p>
+                <p>
+                    <strong><big>|X| = 
+                    <pre>
+                    [[0  1  0  1]
+                     [0  0  0  0]
+                     [1  0  1  0]
+                     [1  1  0  1]] = 7
+                    </pre></big></strong>
+                    <strong><big>|Y| = 
+                    <pre>
+                    [[0.02  0.73  0.13  0.85]
+                     [0.11  0.03  0.05  0.09]
+                     [0.98  0.15  0.89  0.10]
+                     [0.93  0.82  0.07  0.97]] = 6.92
+                    </pre></big></strong>
+                </p>
+                <p>
+                    <strong><big>|X| + |Y| = 7 + 6.92 = 13.92</big></strong>
+                </p>
+                <h3>Dice损失是在Dice系数的基础上进行计算的，其计算公式如下：</h3>
+    <p>
+        Dice损失 <strong>L</strong> = 1 − Dice系数 = 1 − <strong><big>2|X∩Y| / |X| + |Y|</big></strong>
+    </p>
+    <p>其计算公式为：</p>
+    <p>
+        <strong><big>L = 1 − 2|X∩Y| / |X| + |Y| = 1 − 2 × 6.17 / 13.92 ≈ 0.1135</big></strong>
+    </p>
+    <p>Dice系数越大，表明集合越相似，则Dice损失越小；反之亦然。</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
