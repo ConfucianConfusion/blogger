@@ -56,10 +56,22 @@
     margin-bottom: 20px;
 }
 code {
-    background-color: #f4f4f4;
+    background-color: var(--card-bg);
+    color: var(--text-color);
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--text-color);
     border-radius: 4px;
     display: block;
     font-family: 'Courier New', Courier, monospace;
+}
+
+pre {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+    margin: 15px 0;
 }

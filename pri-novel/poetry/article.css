@@ -55,3 +55,18 @@
 .article-content p {
     margin-bottom: 20px;
 }
+
+pre {
+    background-color: var(--card-bg);
+    color: var(--text-color); /* 默认使用变量 */
+    padding: 15px;
+    border-radius: 4px;
+    border: 1px solid var(--text-color);
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: auto;
+    margin: 15px 0;
+}
+
+[data-theme='dark'] pre {
+    color: #ffffff !important; /* 深色模式下强制白色 */
+}
