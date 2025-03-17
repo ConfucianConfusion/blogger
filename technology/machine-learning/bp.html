@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>反向传播 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../../ai/development.html">发展应用</a></li>
+                        <li><a href="../../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="../machine-learning.html" class="nav-button">返回上一页</a>
+        <a href="../../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">多层神经网络里的基本算法————反向传播</h1>
+                <div class="article-meta">发布于：2025-03-17</div>
+            </div>
+            <div class="article-content">
+                <h1> 单层神经网络处理抽象问题时的局限性</h1>
+                <p>任何监督式学习算法的目标是找到一个能把一组输入最好地映射到其正确的输出的函数。例如一个简单的分类任务，其中输入是动物的图像，正确的输出将是动物的名称。一些输入和输出模式可以很容易地通过单层神经网络（如感知器）学习。但是这些单层的感知机只能学习一些比较简单的模式，例如那些非线性可分的模式。例如，人可以通过识别动物的图像的某些特征进行分类，例如肢的数目，皮肤的纹理（无论是毛皮，羽毛，鳞片等），该动物的体型，以及种种其他特征。但是，单层神经网络必须仅仅使用图像中的像素的强度来学习一个输出一个标签函数。因为它被限制为仅具有一个层，所以没有办法从输入中学习到任何抽象特征。多层的网络克服了这一限制，因为它可以创建内部表示，并在每一层学习不同的特征。第一层可能负责从图像的单个像素的输入学习线条的走向。第二层可能就会结合第一层所学并学习识别简单形状（如圆形）。每升高一层就学习越来越多的抽象特征，如上文提到的用来图像分类。每一层都是从它下方的层中找到模式，就是这种能力创建了独立于为多层网络提供能量的外界输入的内部表达形式。 反向传播算法的发展的目标和动机是找到一种训练的多层神经网络的方法，于是它可以学习合适的内部表达来让它学习任意的输入到输出的映射。</p>
+                <p>所谓<b>反向传播</b>（英语：Backpropagation，意为误差反向传播，缩写为BP）是对多层人工神经网络进行梯度下降的算法，也就是用链式法则以网络每层的权重为变量计算损失函数的梯度，以更新权重来最小化损失函数。</p>
+                <p>BP算法的第一步是<b>前向传播</b>，这里就是简单的将多个MP神经元模型搭建成网络进行多层训练，有关MP神经元模型可以看机器学习版块第一节内容</p>
+                <img src="..\machine-learning\photo\fp.png" alt="example" width="730" height="330">
+                <p>x对应的部分叫<b>输入层</b>，中间h对应的部分叫<b>隐藏层</b>，y对应的部分叫<b>输出层</b></p>
+                <h2>接下来就到了关键的一步，即反向传播更新权重</h2>
+                <p>我们输出的值与真实值存在差异，我们想做的，就是用一套算法，根据损失函数得到可供更新权重的一个函数，在神经网络上反向走一遍，更新权重后重新开始训练，不断迭代这一过程使损失函数最小化</p>
+                <img src="..\machine-learning\photo\bp1.png" alt="example" width="730" height="330">
+                <p>这里我们定义了一个方差用于衡量损失函数</p>
+                <p>接下来我们需要看看更新权重的函数是如何推出来的，这里我们用到了<b>“随机梯度下降法”</b></p>
+                <img src="..\machine-learning\photo\bp2.png" alt="example" width="730" height="800">
+                <p>注：之前照片的δ表示输出值与真实值相减得到的一个数值，这里的δ表示误差项</p>
+                <p>在实际计算中，我们还引入了学习率，这是为了控制权重更新的步长，避免更新过大（过冲）或过小（收敛太慢），保持训练的稳定性。 </p>
+                <img src="..\machine-learning\photo\bp3.png" alt="example" width="250" height="80">
+                <p>接下来只需要对每一个节点重复这样更新权重的操作即可~~</p>
+                <img src="..\machine-learning\photo\bp4.png" alt="example" width="730" height="300">
+                <p>不断迭代下去，直到输出值等于真实值</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../../script.js"></script>
+</body>
+</html>
