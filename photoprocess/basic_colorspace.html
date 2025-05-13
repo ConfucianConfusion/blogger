@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>颜色空间 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../ai/development.html">发展应用</a></li>
+                        <li><a href="../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="phoprocessindex.html" class="nav-button">返回上一页</a>
+        <a href="../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">基础篇：<br>颜色空间的介绍</h1>
+                <div class="article-meta">2025-05-06</div>
+            </div>
+            <div class="article-content">
+               <p>在数字图像处理、计算机图形学和色彩科学领域，​颜色空间（Color Space）​是一个基础而重要的概念。
+                它定义了颜色的数学表示方法及其组织方式，为颜色的描述、存储、转换和再现提供了系统化的框架。
+                颜色空间通过特定的坐标系统对色彩进行量化，使得颜色能够被精确地测量、计算和传递。</p>
+                <h2>I、加法混合&减法混合</h2>
+                <p>这是颜色呈现的两种基本原理，也是我们理解颜色空间的第一步</p>
+                <p>加法混合适用于主动发光的物体，也就是显示屏，LED灯这样的物体，和我们在物理学上所学到的光的混合原理一致，
+                   通过叠加不同颜色的光来混合色彩，光的波长相加后亮度增强，最终趋向白色。加法混合原理下最为常见的颜色空间
+                   就是RGB颜色空间，这也是目前应用最为广泛的标准，构成了我们电子设备屏幕上的花花绿绿
+                </p>
+                <p>减法混合适用于被动发光的物体，也就是印刷后我们在纸质材料看到的图案，光反射进入人眼，且油墨反射的光都是其不
+                    吸收的光，相当于和我们刚才的情况恰恰相反，通过吸收（减去）特定波长的光来混合色彩，反射的光线减少，最终趋向黑色。
+                    减法混合原理下最为常见的颜色空间就是CMYK颜色空间，也就是印刷行业的通用标准
+                </p>
+                <p>不难发现，无论是加法混合还是减法混合，其区别的来源便是硬件本身的性质，也就是说RGB、CMYK这些颜色空间都具有<b>设备依赖性</b>
+                但在计算机图像处理的具体领域里，为了更加方便地进行操作和表示，出现了Lab这样仅从数学角度定义的颜色空间，这样的颜色空间从理论上的数值
+                定义，根据硬件的不同有着不同的算法进行转换后显示，不依赖硬件，使得颜色的表达更加灵活、广泛</p>
+                <h2>II、RGB\HSV(HSL)\Lab详细介绍</h2>
+                <h3>1. RGB（红绿蓝）色彩空间</h3>
+    <div class="highlight">
+        <p><strong>原理</strong>：基于人眼对红（Red）、绿（Green）、蓝（Blue）三原色的感知，通过不同比例的叠加表示颜色。</p>
+        <ul>
+            <li><strong>加色模型</strong>：光线叠加时亮度增加（如显示器发光）。</li>
+            <li><strong>取值范围</strong>：通常为 <code>0-255</code>（8位通道），例如纯红色为 <code>(255, 0, 0)</code>。</li>
+        </ul>
+    </div>
+    
+    <p><strong>特点</strong>：</p>
+    <ul>
+        <li><strong>直观</strong>：与硬件（显示器、摄像头）直接对应。</li>
+        <li><strong>非线性感知</strong>：人眼对RGB分量的敏感度不一致（如对绿色更敏感）。</li>
+        <li><strong>通道相关性</strong>：改变一个分量会影响整体颜色（如调整红色会影响其他通道的混合效果）。</li>
+    </ul>
+    
+    <p><strong>应用场景</strong>：</p>
+    <ul>
+        <li>数字图像存储（如JPEG、PNG）。</li>
+        <li>显示器、摄像头等硬件设备。</li>
+    </ul>
+    
+    <p><strong>缺点</strong>：</p>
+    <ul>
+        <li>不适合直接用于颜色分析（如区分亮度与色度）。</li>
+    </ul>
+    <img src="..\photoprocess\photoitself\rgb.png" alt="example" width="700" height="500">
+    <p>*如图演示了矩阵表示的RGB三通道下图像的表示</p>
+    
+    <h3>2. HSV（色相、饱和度、明度）色彩空间</h3>
+    <div class="highlight">
+        <p><strong>原理</strong>：从人眼感知角度将颜色分解为：</p>
+        <ul>
+            <li><strong>H（Hue）</strong>：色相，表示颜色类型（如红、黄），范围 <code>0°-360°</code>。</li>
+            <li><strong>S（Saturation）</strong>：饱和度，表示颜色纯度（0%为灰色，100%为纯色）。</li>
+            <li><strong>V（Value/Brightness）</strong>：明度，表示颜色亮度（0%为黑色，100%为最亮）。</li>
+        </ul>
+    </div>
+    
+    <p><strong>特点</strong>：</p>
+    <ul>
+        <li><strong>直观分离</strong>：色相、饱和度、明度独立调整，更符合人类对颜色的描述。</li>
+        <li><strong>对光照不敏感</strong>：H和S分量与亮度（V）分离，适合颜色识别任务。</li>
+    </ul>
+    
+    <p><strong>应用场景</strong>：</p>
+    <ul>
+        <li>图像编辑软件（如Photoshop的调色工具）。</li>
+        <li>颜色分割（如OpenCV中的物体跟踪）。</li>
+        <li>去除光照影响（如基于色相的目标检测）。</li>
+    </ul>
+    
+    <p><strong>缺点</strong>：</p>
+    <ul>
+        <li>色相（H）在低饱和度时可能不稳定（接近灰色时H无意义）。</li>
+    </ul>
+    <img src="..\photoprocess\photoitself\hsv.png" alt="example" width="700" height="500">
+    <p>*如图演示了我们在相关图像编辑软件里使用调色板快速选取所需颜色的功能，包含HSV和RGBA两个方式数值上调整</p>
+    <h3>3. Lab（CIE L*a*b*）色彩空间</h3>
+    <div class="highlight">
+        <p><strong>原理</strong>：基于人眼的颜色感知理论，由国际照明委员会（CIE）制定：</p>
+        <ul>
+            <li><strong>L（Lightness）</strong>：亮度，范围 <code>0-100</code>（黑到白）。</li>
+            <li><strong>a</strong>：红绿轴（+a为红，-a为绿）。</li>
+            <li><strong>b</strong>：黄蓝轴（+b为黄，-b为蓝）。</li>
+        </ul>
+    </div>
+    
+    <p><strong>特点</strong>：</p>
+    <ul>
+        <li><strong>感知均匀性</strong>：数值变化与人眼感知的色差成正比（ΔE可用于量化色差）。</li>
+        <li><strong>设备无关</strong>：基于人眼视觉而非硬件，适合跨设备颜色匹配。</li>
+        <li><strong>广色域</strong>：能表示比RGB更丰富的颜色。</li>
+    </ul>
+    
+    <p><strong>应用场景</strong>：</p>
+    <ul>
+        <li>印刷、纺织等行业的颜色标准化。</li>
+        <li>图像增强（如对比度调整时保留色相）。</li>
+        <li>颜色科学（如色差计算）。</li>
+    </ul>
+    
+    <p><strong>缺点</strong>：</p>
+    <ul>
+        <li>计算复杂，转换到RGB需要非线性运算。</li>
+        <li>不适合直接用于显示或存储。</li>
+    </ul>
+    <img src="..\photoprocess\photoitself\lab.png" alt="example" width="700" height="700">
+    <p>*如图形象演示了Lab三个维度</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

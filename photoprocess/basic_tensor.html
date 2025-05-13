@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>张量 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../ai/development.html">发展应用</a></li>
+                        <li><a href="../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="phoprocessindex.html" class="nav-button">返回上一页</a>
+        <a href="../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">基础篇：<br>张量与维度</h1>
+                <div class="article-meta">2025-05-06</div>
+            </div>
+            <div class="article-content">
+                <h2>1. 张量的基本定义</h2>
+        <p>在计算机图像处理中，<strong>张量(Tensor)</strong>是一种多维数组结构，用于高效表示和操作图像数据及其他高维数据。</p>
+        
+        <p><strong>数学背景：</strong>张量是向量和矩阵的高维推广，可视为多维数组。其"阶"(或"秩")表示维数：</p>
+        <ul>
+            <li><strong>0阶张量：</strong>标量(单个数值)</li>
+            <li><strong>1阶张量：</strong>向量(一维数组)</li>
+            <li><strong>2阶张量：</strong>矩阵(二维数组)</li>
+            <li><strong>更高阶：</strong>三维及以上数组(如RGB图像、视频序列等)</li>
+        </ul>
+        
+        <p><strong>图像处理中的张量：</strong>通常指<strong>3阶或4阶张量</strong>，用于表示批量的图像数据。</p>
+    </div>
+    
+    <h2>2. 图像处理中的张量表示</h2>
+    
+    <h3>(1) 单张图像</h3>
+    <ul>
+        <li><strong>灰度图像：</strong>2阶张量(高度 × 宽度)</li>
+        <li><strong>RGB彩色图像：</strong>3阶张量(高度 × 宽度 × 通道数)，例如 (256, 256, 3)</li>
+    </ul>
+    <img src="..\photoprocess\photoitself\3d_tensor.png" alt="example" width="700" height="300">
+    
+    <h3>(2) 批量图像</h3>
+    <ul>
+        <li><strong>深度学习批量处理彩色图像：</strong>4阶张量(高度 × 宽度 × 通道数 × 批次，这里的批次指样本数量)</li>
+        <li><strong>短视频：</strong>4阶张量(高度 × 宽度 × 通道数 × 批次，这里的批次指帧数)</li>
+    </ul>
+    <p>*5阶张量则出现于深度学习批量处理短视频或长视频（由4阶的视频片段组成）中</p>
+    
+    <h2>3. 为什么使用张量？</h2>
+    <ul>
+        <li><strong>统一数据结构：</strong>张量能整合图像、批量数据、多通道信息，便于并行计算(如GPU加速)</li>
+        <li><strong>深度学习框架支持：</strong>TensorFlow、PyTorch等库的核心数据结构均为张量，支持自动微分和优化</li>
+        <li><strong>高维操作：</strong>方便实现卷积、池化等图像处理操作</li>
+    </ul>
+
+    <h2>3. 主流框架下张量写法</h2>
+    <p>*C表示通道数，H表示高度，W表示宽度，N表示个数</p>
+    <ul>
+        <li><strong>Pytorch：</strong>(N, C, H, W)，通道优先</li>
+        <li><strong>Tensorflow：</strong>(N, H, W, C)，通道最后</li>
+    </ul>
+            </div>
+        </article>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

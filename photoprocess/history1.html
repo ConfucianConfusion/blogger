@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../ai/development.html">发展应用</a></li>
+                        <li><a href="../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="phoprocessindex.html" class="nav-button">返回上一页</a>
+        <a href="../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">背景篇：<br>LeNet开天辟地</h1>
+                <div class="article-meta">2025-05-07</div>
+            </div>
+                
+
+            
+            <div class="article-content">
+                <p>早在二十世纪早期，生物学家通过对动物感受器官神经系统的研究，提出了“感受野”的概念，
+                    以对猫的视觉皮层研究为例，他们发现了神经元对视觉输入的响应并非是针对整个视野的，
+                    而是只对视野中特定的小区域内的刺激做出反应。他们将这个特定的区域定义为该神经元的<b>感受野（Receptive Field）</b>
+                </p>
+                <p>视觉信息在皮层中是分层处理的。前期的视觉皮层神经元的感受野相对较小，它们对局部边缘、方向和朝向等基本视觉特征敏感。
+                    可以说每个神经元只关注输入图像的特定局部区域。    
+                   而随着信息在视觉皮层中传递到更高级的区域，神经元的感受野逐渐增大，并且它们开始对更复杂的形状、物体甚至面孔等全局特征产生响应。
+                   这意味着高级神经元是通过整合来自低级神经元的局部信息来形成更复杂的理解。
+                   这些发现揭示了生物视觉系统处理视觉信息的一种关键机制：通过局部感知和层级整合来逐步提取和理解图像内容。
+                在CNN之前的人工神经网络里面，人们习惯于把神经元以一维的方式排列并建立连接（全连接），有种“胡子眉毛一把抓”的感觉，传播响应整体的信息，
+            而CNN吸取了感受野的概念，CNN里的感受野相当于卷积核，将得到的局部二维特征排列起来，通过整合局部信息完成对整体的理解。</p>
+            <p>扬·勒昆（现译<b>杨立昆</b>）是实用卷积神经网络发展的核心人物，尤其是在20世纪80年代末和90年代他在AT&T贝尔实验室所做的开创性工作（MNIST数据集下的手写数字识别）。
+                LeNet 是 Yann LeCun 于 1989 年提出的卷积神经网络。LeNet 的常用术语是<b>LeNet-5</b>，是一种简单的卷积神经网络。LeNet-5 标志着 CNN 的诞生，并概述了其核心组件。
+                然而，由于缺乏硬件，尤其是 GPU，
+                以及像 SVM 这样的替代算法（这些算法可以实现与 LeNet 类似甚至更好的效果），LeNet 在当时并不流行。
+                 </p>
+                 <p>LeNet开创性地给出了一些全新地图像处理方案，引入了卷积层、池化层、非线性激活函数，
+                    而把以往地多层感知器或全连接层作为最后的分类器。当然，作为最初的CNN，LeNet结构相对简单，
+                    只有七层（3卷积，2池化，2全连接），激活函数用的则是<b>tanh函数</b>，最后的分类器是softmax。
+                 </p>
+                 <img src="..\photoprocess\photoitself\lenet2.png" alt="example" width="700" height="250">
+                 <img src="..\photoprocess\photoitself\lenet.png" alt="example" width="700" height="360">
+                 <p>LeNet-5的主要和最具影响力的应用是手写数字识别，这对于自动化邮政服务（读取邮政编码）和银行业务（读取支票上的手写金额）等任务至关重要 。</p>
+                 <p>但正如上面所提到的那样，尽管LeNet-5取得了进步，但在21世纪初，CNN仍被认为计算成本过高且缺乏对过拟合等情况的处理手段，这导致研究人员将重点转向SVM等算法 。</p> 
+                 <p>延申阅读：https://medium.com/@siddheshb008/lenet-5-architecture-explained-3b559cb2d52b</p>
+            </div>
+        </article>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>

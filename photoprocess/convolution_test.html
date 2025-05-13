@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实操卷积 - Confucian Confusion的博客</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="article.css">
+</head>
+<body>
+    <header>
+        <nav class="main-nav">
+            <div class="logo">
+                <img src="../icons/logo.svg" alt="Logo" class="logo-img">
+            </div>
+            <ul class="nav-links">
+                <li class="nav-item">
+                    <a href="#">文学创作</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pri-novel/novel.html">小说散文</a></li>
+                        <li><a href="../pri-novel/poetry.html">诗词歌赋</a></li>
+                        <li><a href="../pri-novel/review.html">文艺评论</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">同窗妙笔</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../pub-novel/shuiwengai.html">"水文丐"</a></li>
+                        <li><a href="../pub-novel/nanzhu.html">"南烛"</a></li>
+                        <li><a href="../pub-novel/lixian.html">"莉荨"</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">技术钩沉</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../technology/machine-learning.html">机器学习</a></li>
+                        <li><a href="../technology/skill-tree-1.html">（点技能树ing）</a></li>
+                        <li><a href="../technology/skill-tree-2.html">（点技能树ing）</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="#">AI鸟瞰</a>
+                    <ul class="dropdown-menu">
+                        <li><a href="../ai/tools.html">工具推荐</a></li>
+                        <li><a href="../ai/development.html">发展应用</a></li>
+                        <li><a href="../ai/social.html">社科视角</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="theme-toggle">
+                <button id="themeToggle">🌓</button>
+            </div>
+        </nav>
+    </header>
+    <div class="nav-buttons">
+        <a href="phoprocessindex.html" class="nav-button">返回上一页</a>
+        <a href="../index.html" class="nav-button">返回首页</a>
+    </div>
+
+    <div class="article-container">
+        <article>
+            <div class="article-header">
+                <h1 class="article-title">实践篇：<br>卷积操作对图像模糊化处理</h1>
+                <div class="article-meta">2025-05-07</div>
+            </div>
+            <div class="article-content">
+                <p>*由于笔者用的笔记本是轻薄本，于是在代码里强制使用cpu进行操作，笔者可以根据自己的设备情况选择cpu或gpu</p>
+<pre>
+"""
+RGB图像模糊化处理（10×10卷积核）
+
+该脚本使用PyTorch实现对RGB图像进行模糊处理。
+核心操作是应用一个10x10的均值卷积核。
+
+"""
+
+import torch  # 导入PyTorch库，用于张量操作和神经网络
+import torch.nn as nn  # 导入PyTorch的神经网络模块
+from PIL import Image  # 导入PIL库（Python Imaging Library）用于图像处理
+import torchvision.transforms as transforms  # 导入torchvision的transforms模块，用于图像变换
+import matplotlib.pyplot as plt  # 导入matplotlib的pyplot模块，用于绘图
+
+# --------------------- 1. 加载图片 ---------------------
+input_image = Image.open("img.png").convert('RGB')  
+# 打开名为 "img.png" 的图像文件，并将其转换为RGB模式。
+# .convert('RGB') 确保图像是RGB格式，即使原始图像可能是其他格式（如RGBA或灰度）。
+
+# --------------------- 2. 预处理 ---------------------
+transform = transforms.Compose([
+    transforms.ToTensor(),  # 将PIL图像或NumPy数组转换为PyTorch张量。
+    #  ToTensor() 还会自动将像素值从 [0, 255] 范围归一化到 [0, 1] 范围。
+])
+input_tensor = transform(input_image).unsqueeze(0)  # 对图像应用变换，并添加一个batch维度。
+#  unsqueeze(0) 在张量的第0维（即最外层）添加一个大小为1的维度，
+#  这是因为PyTorch的卷积层通常期望输入是4D张量 (batch_size, channels, height, width)。
+#  因此，[C, H, W] 变为 [1, C, H, W]。
+
+# --------------------- 3. 定义10×10模糊卷积 ---------------------
+kernel_size = 10  # 定义卷积核的大小为10x10。
+conv_layer = nn.Conv2d(
+    in_channels=3,  # 输入通道数为3 (RGB)
+    out_channels=3,  # 输出通道数也为3 (保持RGB)
+    kernel_size=kernel_size,  # 卷积核大小
+    stride=1,  # 步长为1 (卷积核每次滑动1个像素)
+    padding=kernel_size // 2,  
+    # 填充大小，这里使用 (kernel_size // 2) 来保持输出尺寸与输入尺寸大致相同。
+    # 对于kernel_size=10, padding=5。
+    groups=3,  # 设置 groups=3 意味着将输入和输出通道分成3组，每组独立进行卷积。
+    # 这实现了通道分离卷积，即每个输入通道只与对应的输出通道进行卷积。
+    # 对于RGB图像，这表示每个颜色通道（R, G, B）分别进行模糊处理。
+    bias=False,  # 模糊操作通常不需要偏置项，因为模糊核本身决定了输出的平均值。
+    padding_mode='reflect'  # 使用反射填充。
+    #  'reflect' 填充通过反射输入张量的内容来填充边界，这有助于减少边缘效应。
+)
+
+# 设置均值模糊核权重（所有值=1/100）
+with torch.no_grad():  # 这是一个上下文管理器，用于临时禁用梯度计算。
+    #  在with torch.no_grad(): 块中的操作不会被记录用于反向传播，这可以节省内存并提高速度。
+    blur_kernel = torch.ones((kernel_size, kernel_size)) / (kernel_size**2)  
+    # 创建一个全1的kernel_size x kernel_size张量，然后除以kernel_size**2，
+    #  得到一个均值滤波核。例如，对于10x10的核，每个元素的值都是1/100。
+conv_layer.weight.data = blur_kernel.view(1, 1, kernel_size, kernel_size).repeat(3, 1, 1, 1)
+    #  将计算出的模糊核设置为卷积层的权重。
+    #  blur_kernel.view(1, 1, kernel_size, kernel_size) 
+    将模糊核重塑为 [1, 1, kernel_size, kernel_size] 的形状。
+    #  repeat(3, 1, 1, 1) 将其沿通道维度 (第0维) 重复 3 次，以应用于RGB图像的每个通道。
+
+# --------------------- 4. 执行卷积 ---------------------
+output_tensor = conv_layer(input_tensor)  # 将模糊卷积层应用于输入张量。
+#  这将生成模糊后的图像张量。
+
+# --------------------- 5. 安全转换张量到numpy（修复报错） ---------------------
+def tensor_to_rgb_image(tensor):
+    """
+    将PyTorch张量转为numpy数组供显示
+
+    必须步骤：
+        1. .squeeze(0)   移除batch维度 [1,3,H,W] -> [3,H,W]
+        2. .permute(1,2,0) 调整通道顺序 [3,H,W] -> [H,W,3]
+        3. .detach()     断开梯度计算链（防止报错）
+        4. .cpu()        确保数据在CPU（兼容性）
+        5. .numpy()      转为numpy数组
+    """
+    # 1. 移除batch维度
+    tensor = tensor.squeeze(0) 
+    # 从形状为 [1, 3, H, W] 的张量中移除大小为 1 的 batch 维度，得到 [3, H, W]。
+
+    # 2. 调整通道顺序
+    tensor = tensor.permute(1, 2, 0) # 将通道维度从第一个位置移动到最后一个位置，
+    #  将形状从 [3, H, W] 变为 [H, W, 3]。
+    这是因为matplotlib的imshow函数期望图像张量的形状为 [H, W, C]。
+
+    # 3. 断开梯度计算链
+    tensor = tensor.detach() # 从计算图中分离张量。
+    #  这是必要的，因为我们不希望在将张量转换为NumPy数组后，对NumPy数组的操作影响到原始张量的梯度。
+    #  如果不使用 detach()，可能会在尝试将需要梯度的张量转换为 NumPy 数组时引发错误。
+
+    # 4. 确保数据在CPU
+    tensor = tensor.cpu() # 将张量移动到CPU。
+    #  虽然这不是绝对必要的，但这是一个好的实践，
+    #  因为NumPy通常在CPU上运行，而且这样做可以避免潜在的设备兼容性问题。
+
+    # 5. 转为numpy数组
+    return tensor.numpy() # 将PyTorch张量转换为NumPy数组。
+
+
+# --------------------- 6. 可视化 ---------------------
+plt.figure(figsize=(12, 6))  # 创建一个宽度为12英寸，高度为6英寸的图形。
+
+plt.subplot(1, 2, 1)  # 在1行2列的网格中创建一个子图，并选择第一个子图。
+plt.imshow(tensor_to_rgb_image(input_tensor))  # 显示原始图像。
+plt.title("Original Image")  # 设置子图的标题。
+
+plt.subplot(1, 2, 2)  # 在1行2列的网格中创建一个子图，并选择第二个子图。
+plt.imshow(tensor_to_rgb_image(output_tensor))  # 显示模糊后的图像。
+plt.title(f"Blurred (10×10 Kernel)")  # 设置子图的标题，包括使用的卷积核大小。
+
+plt.show()  # 显示整个图形。    
+</pre>  
+<p>下面是对谷歌图标处理后得到的结果</p> 
+<img src="..\photoprocess\photoitself\google_blur.png" alt="example" width="700" height="360">         
+            </div>
+        </article>
+    </div>
+
+    <script src="../script.js"></script>
+</body>
+</html>
